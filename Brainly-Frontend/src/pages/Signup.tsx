@@ -18,7 +18,6 @@ export function Signup() {
     }
 
     try {
-      // ✅ Send correct data format
       await axios.post(`${BACKEND_URL}api/v1/signup`, {
         username,
         password,
@@ -27,16 +26,16 @@ export function Signup() {
       alert("You have signed up!");
     } catch (err: any) {
       console.error("Signup failed:", err?.response?.data || err.message);
-      alert("Signup failed. Check console for more info.");
+      alert("Signup failed");
     }
   }
 
   return (
     <div className="h-screen w-screen bg-gray-300 flex justify-center items-center">
-      <div className="bg-white rounded p-6 min-w-48 shadow-md w-96">
+      <div className="bg-white rounded-xl p-6 min-w-48 shadow-md w-96">
         <Input ref={usernameRef} placeholder="Username" />
         <Input ref={passwordRef} placeholder="Password" type="password" />
-        <div className="flex justify-center pt-4 pb-4">
+        <div className="flex justify-center pt-4 pb-4 rounded-xl">
           <Button
             onClick={signup}
             text="Sign Up"

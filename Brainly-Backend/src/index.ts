@@ -1,5 +1,8 @@
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
+import { MONGO_URL } from "./config";
+
 
 import jwt from "jsonwebtoken";
 import { ContentModel, LinkModel, UserModel } from "./db";
@@ -178,4 +181,13 @@ app.get("/api/v1/brain/:shareLink",async (req,res)=>{
     })
 })
 
-app.listen(3000);
+mongoose.connect(MONGO_URL)
+  .then(() => {
+    console.log("✅ Connected to MongoDB");
+    app.listen(3000, () => {
+      console.log("🚀 Server running at http://localhost:3000");
+    });
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+  });

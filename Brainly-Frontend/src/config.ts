@@ -1,1 +1,1 @@
-export  const BACKEND_URL =  "mongodb+srv://srimannarayanavarmadunde:sriman69@brainly.k90aodo.mongodb.net/";
+export const BACKEND_URL = "http://localhost:3000/";

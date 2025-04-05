@@ -14,9 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = require("./config");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const db_1 = require("./db");
-const config_1 = require("./config");
+const config_2 = require("./config");
 const middleware_1 = require("./middleware");
 const utils_1 = require("./utils");
 const app = (0, express_1.default)();
@@ -51,7 +53,7 @@ app.post("/api/v1/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
     if (existingUser) {
         const token = jsonwebtoken_1.default.sign({
             id: existingUser._id
-        }, config_1.JWT_PASSWORD);
+        }, config_2.JWT_PASSWORD);
         res.send({
             token
         });
@@ -161,4 +163,13 @@ app.get("/api/v1/brain/:shareLink", (req, res) => __awaiter(void 0, void 0, void
         content: content
     });
 }));
-app.listen(3000);
+mongoose_1.default.connect(config_1.MONGO_URL)
+    .then(() => {
+    console.log("✅ Connected to MongoDB");
+    app.listen(3000, () => {
+        console.log("🚀 Server running at http://localhost:3000");
+    });
+})
+    .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+});
